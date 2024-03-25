@@ -28,17 +28,36 @@ public static class PdfExtension
             pdf.Open();
             pdf.Add(titulo);
 
-            pdf.Close();
             var caminhopdf = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, nomeArquivo);
             if(File.Exists(caminhopdf))
             {
                 Process.Start(new ProcessStartInfo()
                 {
-                    Arguments = $"/c Chrome {caminhopdf}",
+                    Arguments = $"/c start {caminhopdf}",
                     FileName = "cmd.exe",
                     CreateNoWindow = true
                 });
             }
+
+            //Adicao de imagem
+            var caminhoImagem = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
+                                "img\\youtube.png");
+            
+            if(File.Exists(caminhoImagem))
+            {
+                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(caminhoImagem);
+                float razaoAlturaLargura = logo.Width/logo.Height;
+                float alturaLogo = 32;
+                float larguraLogo = alturaLogo * razaoAlturaLargura;
+                logo.ScaleToFit(larguraLogo, alturaLogo);
+                var margemEsquerda = pdf.PageSize.Width - pdf.RightMargin - larguraLogo;
+                var margemTopo = pdf.PageSize.Height - pdf.TopMargin - 54;
+                logo.SetAbsolutePosition(margemEsquerda,margemTopo);
+                writer.DirectContent.AddImage(logo,false);
+            }
+
+            //adicao da tabela de dados 
+            
         }
     }
 }
