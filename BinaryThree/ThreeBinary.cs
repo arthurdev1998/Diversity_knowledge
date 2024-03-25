@@ -24,9 +24,6 @@ public class ThreeBinary<T> where T : IComparable
                 {
                     if (atual.EsquerdaElemento != null)
                     {
-
-
-                        
                         atual = atual.EsquerdaElemento;
                         continue;
                     }
