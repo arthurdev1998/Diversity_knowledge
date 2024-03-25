@@ -21,3 +21,5 @@ IEnumerable<int> GenerateNumber()
 }
 stopwatch.Stop();
 Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
+
